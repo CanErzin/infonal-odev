@@ -1,0 +1,29 @@
+
+ This project is a basic web application consisting of a single page.
+ Main web page lists users in the system and user could add , update or remove a user.
+ Project developed with using these technologies :
+  - Maven
+  - Spring (Core , Data , MVC)
+  - MongoDb
+  - ReCaptcha
+  - Junit
+  - Log4j
+
+  In order to test the project you need the deploy project in a server. In test purposes i used Apache Tomcat 8 .
+  Project is not tested on any other server.
+
+  Notes.
+Development Environment :
+      - MacOSX El Capitan
+This project hasn't been tested on other environments. But you shouldn't expect any issues on diffrent platforms.
+However there is a problem with MongoDb instillation on MacOsx.
+If you're usin brew to install MongoDb you will probably face with the same issue. After installing MongoDb
+you should run this commands in that order via terminal :
+
+-- sudo mkdir -p /data/db/
+-- sudo chown `id -u` /data/db
+
+    - Intelij Idea 15.0.3
+
+
+
