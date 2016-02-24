@@ -60,5 +60,10 @@ public interface UserService {
 
     public User findUser(Long id) throws NotPersistedException;
 
-
+    /**
+     * This method returns the current sequence in order to generate Id for new instances.
+     * It performs an expensive operations it shouldn't use unless it is necessary.
+     * @return
+     */
+    public Long getSequence() ;
 }

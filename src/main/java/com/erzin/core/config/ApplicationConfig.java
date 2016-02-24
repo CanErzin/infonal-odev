@@ -17,8 +17,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @ComponentScan(basePackages = "com.erzin.core")
 @ImportResource({"classpath:applicationContext.xml"})
-@EnableWebMvc
-//@PropertySource("classpath:application.properties")
 public class ApplicationConfig {
 
 }

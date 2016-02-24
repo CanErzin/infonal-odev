@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service("userService")
@@ -19,11 +21,10 @@ public class UserServiceImpl implements UserService {
     UserDao userDao;
 
     public void saveUser(User instance) {
-        // Couldn't find a way to auto generete id for MongoDb with Spring Data .
-        // So current users count + 1 will be assigned for id for the new instance before persistence.
-        Long userCount = userDao.getCount(); // get the count
-        userCount++; // increment by 1
-        instance.setId(userCount); //  set new instance id with calculated value
+        //First get the current sequence
+        Long currentSequence = getSequence();
+        // new instance id will be 1 greater than the sequence.
+        instance.setId(++currentSequence); //  set new instance id with calculated value
         userDao.save(instance);
         logger.debug("new user added to the database with id " + instance.getId());
     }
@@ -70,5 +71,28 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
+    public Long getSequence() {
+        Long currentSequence;
+        // fetch user list
+        List<User> userList = userDao.findAll();
+        // If list is empty sequence is empty return 0
+        if (userList.isEmpty()) {
+            currentSequence = 0L;
+        } else {
+        // First Sort the list in desc order.
+            Collections.sort(userList, new Comparator<User>() {
+
+                public int compare(User o1, User o2) {
+                    return o2.getId().compareTo(o1.getId());
+                }
+            });
+        // get the first instance with max id.
+            currentSequence = userList.get(0).getId();
+        }
+
+        return currentSequence;
+    }
+
 }
 
